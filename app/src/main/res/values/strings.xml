@@ -20,4 +20,10 @@
     <string name="error_fetch_failed">Не удалось получить прямое видео без знака</string>
     <string name="error_download_failed">Ошибка при скачивании файла</string>
     <string name="permission_denied">Для сохранения требуется доступ к хранилищу</string>
+    <string name="btn_support_developer">Поддержать разработчика</string>
+    <string name="support_card_subtitle">Бесплатно и без рекламы</string>
+    <string name="support_dialog_title">Поддержка разработчика ❤️</string>
+    <string name="support_dialog_message">Приложение полностью бесплатное и без рекламы. Всё сделано для Вашего удобства, чтобы не засорять приложение всяким хламом.\n\nНо вы можете поддержать разработчика, в будущем это даст мотивацию на создание новых проектов, спасибо :)</string>
+    <string name="support_dialog_btn_support">Поддержать</string>
+    <string name="support_dialog_btn_close">Закрыть</string>
 </resources>

@@ -7,7 +7,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
+import android.net.Uri
 import android.os.Bundle
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,6 +37,9 @@ class MainActivity : AppCompatActivity() {
         private const val THEME_AUTO = 0
         private const val THEME_DARK = 1
         private const val THEME_LIGHT = 2
+
+        // Ссылка для пожертвований (Boosty, CloudTips, чаевые Тинькофф/Сбер и т.д.)
+        const val DONATION_URL = "https://pay.cloudtips.ru/p/f35243af"
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -143,6 +148,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 startActivity(Intent.createChooser(shareIntent, "Поделиться видео"))
             }
+        }
+
+        // Support Developer buttons
+        binding.btnSupport.setOnClickListener {
+            showSupportDialog()
+        }
+        binding.btnSupportHeader.setOnClickListener {
+            showSupportDialog()
         }
     }
 
@@ -265,5 +278,37 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Файл сохранен в папку «Загрузки»", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    /**
+     * Shows a dialog informing that the app is 100% free and ad-free, with an option to support development.
+     */
+    private fun showSupportDialog() {
+        val builder = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.support_dialog_title)
+            .setMessage(R.string.support_dialog_message)
+            .setIcon(R.drawable.ic_heart)
+            .setNegativeButton(R.string.support_dialog_btn_close, null)
+
+        if (DONATION_URL.isNotEmpty()) {
+            builder.setPositiveButton(R.string.support_dialog_btn_support) { _, _ ->
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(DONATION_URL))
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Не удалось открыть ссылку", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            builder.setPositiveButton(R.string.support_dialog_btn_support) { _, _ ->
+                Toast.makeText(
+                    this,
+                    "Спасибо за поддержку! Ссылка разработчика будет доступна в следующем обновлении.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        builder.show()
     }
 }
